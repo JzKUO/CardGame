@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E84AFDD81E8ED8C200092BD3 /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84AFDD71E8ED8C200092BD3 /* PlayingCard.swift */; };
 		E86908141E8D40E2005E371C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86908131E8D40E2005E371C /* AppDelegate.swift */; };
 		E86908161E8D40E2005E371C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86908151E8D40E2005E371C /* ViewController.swift */; };
 		E86908191E8D40E2005E371C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E86908171E8D40E2005E371C /* Main.storyboard */; };
@@ -21,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E84AFDD71E8ED8C200092BD3 /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		E86908101E8D40E2005E371C /* CardGameSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGameSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E86908131E8D40E2005E371C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E86908151E8D40E2005E371C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; usesTabs = 1; wrapsLines = 0; };
@@ -88,7 +86,6 @@
 			children = (
 				E86908281E8D4A13005E371C /* Card.swift */,
 				E869082B1E8D9D15005E371C /* Deck.swift */,
-				E84AFDD71E8ED8C200092BD3 /* PlayingCard.swift */,
 				E8FEA0B81E923D1900202E45 /* PlayingCardDeck.swift */,
 				E8FEA0BB1E9253EF00202E45 /* CardMatchingGame.swift */,
 			);
@@ -172,7 +169,6 @@
 				E86908141E8D40E2005E371C /* AppDelegate.swift in Sources */,
 				E869082C1E8D9D15005E371C /* Deck.swift in Sources */,
 				E869081C1E8D40E2005E371C /* CardGameSwift.xcdatamodeld in Sources */,
-				E84AFDD81E8ED8C200092BD3 /* PlayingCard.swift in Sources */,
 				E86908291E8D4A13005E371C /* Card.swift in Sources */,
 				E8FEA0B91E923D1900202E45 /* PlayingCardDeck.swift in Sources */,
 			);
