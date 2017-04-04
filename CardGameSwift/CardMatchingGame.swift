@@ -85,7 +85,7 @@ class CardMatchingGame: NSObject {
 
 	// 暫存（兩張）牌
 	@IBAction func StackCard(card: Card) -> Void {
-//		print(card.GetTitle())
+		print(card.GetTitle())
 		if self._flipCounter < 1 {
 			self._flipCounter += 1
 			self._matchCardDeck.AddCard(card: card)
@@ -125,10 +125,6 @@ class CardMatchingGame: NSObject {
 	}
 
 	public func IsEnd() -> Bool {
-		if self._matchCount == 8 {
-			self._matchCount = 0
-			return true
-		}
-		return false
+		return (self._matchCount == 8)
 	}
 }
