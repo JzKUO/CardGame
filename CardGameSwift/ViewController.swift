@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 	let _game = CardMatchingGame()
 	@IBOutlet weak var secondTime: UILabel!
+	@IBOutlet weak var startButton: UIButton!
 	var _timer: Timer = Timer()
 	var _second = 0
 
@@ -30,9 +31,16 @@ class ViewController: UIViewController {
 	//	定義初始化事件
 	func InitAll() -> Void {
 		self._game.InitGame()
-		self.secondTime.text = "0"
-		var index = 0
 
+		// 啟用開始按鈕
+		self.startButton.isEnabled = true
+		// 初始計數器
+		self._second = 0
+		self.secondTime.text = "0"
+		self._timer.invalidate()
+
+		// 將牌部署到畫面上
+		var index = 0
 		for i in 0...3 {
 			for j in 0...3 {
 				// 產生卡牌

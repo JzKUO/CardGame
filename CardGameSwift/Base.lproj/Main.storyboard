@@ -68,6 +68,9 @@
                                     <constraint firstAttribute="height" constant="30" id="FBT-dp-Irs"/>
                                 </constraints>
                                 <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="StartButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HBe-Wg-Xwe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -90,6 +93,10 @@
                             <constraint firstItem="x4A-N6-yl1" firstAttribute="top" secondItem="Gzf-w9-aL5" secondAttribute="bottom" constant="8" id="ybf-Vd-vjj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="secondTime" destination="dCe-yG-edz" id="Thi-yf-QEg"/>
+                        <outlet property="startButton" destination="Gzf-w9-aL5" id="ZiZ-dn-HTr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
