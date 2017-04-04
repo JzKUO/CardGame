@@ -27,7 +27,7 @@ class PlayingCardDeck: Deck {
 	}
 
 	// 重置卡牌（移除所有被抽出的牌）
-	func ResetPlayingDeck() -> Void {
+	public override func Reset() -> Void {
 		self._cards.removeAll()
 	}
 }

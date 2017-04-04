@@ -7,17 +7,22 @@
 //
 
 import Foundation
+import UIKit
 
 class CardMatchingGame: NSObject {
 	private let _deck = Deck()
-	private let _deck2 = Deck()
+	private let _copyDeck = Deck()
 	private let _playingCardDeck = PlayingCardDeck()
-	private let _playingCardDeck2 = PlayingCardDeck()
+	private let _copyPlayingCardDeck = PlayingCardDeck()
+
+	private var _flipCounter = 0
+	// 用來暫存翻開的兩張牌（用來比對）
+	private let _matchCardDeck = PlayingCardDeck()
 
 	// 定義遊戲初始事件
 	public func InitGame() -> Void {
 		self._deck.InitDeck()
-		self._deck2.InitDeck()
+		self._copyDeck.InitDeck()
 		self.DrawCard()
 	}
 
@@ -40,11 +45,11 @@ class CardMatchingGame: NSObject {
 
 			// 將牌加入 PlayingCardDeck
 			self._playingCardDeck.AddCard(card: self._deck.GetCards()[index])
-			self._playingCardDeck2.AddCard(card: self._deck2.GetCards()[index])
+			self._copyPlayingCardDeck.AddCard(card: self._copyDeck.GetCards()[index])
 
 			// 將牌從 Deck 中移除
 			self._deck.RemoveCard(index: index)
-			self._deck2.RemoveCard(index: index)
+			self._copyDeck.RemoveCard(index: index)
 		}
 
 		// 從 PlayingCardDeck 移到 PlayingCardDeck2
@@ -52,23 +57,56 @@ class CardMatchingGame: NSObject {
 		for i in (0 ... counter).reversed() {
 
 			// 將牌加入 PlayingCardDeck
-			self._playingCardDeck2.AddCard(card: self._playingCardDeck.GetCards()[i])
+			self._copyPlayingCardDeck.AddCard(card: self._playingCardDeck.GetCards()[i])
 
 			// 將牌從 Deck 中移除
 			self._playingCardDeck.RemoveCard(index: i)
 		}
 
 		// 從 PlayingCardDeck2 中亂數加到 PlayingCardDeck 裡面
-		counter = self._playingCardDeck2.GetCards().count - 1
+		counter = self._copyPlayingCardDeck.GetCards().count - 1
 		for _ in (0 ... counter).reversed() {
 			// 亂數找卡牌
-			let index = Int(arc4random()) % self._playingCardDeck2.GetCards().count
+			let index = Int(arc4random()) % self._copyPlayingCardDeck.GetCards().count
 
 			// 將牌加入 PlayingCardDeck
-			self._playingCardDeck.AddCard(card: self._playingCardDeck2.GetCards()[index])
+			self._playingCardDeck.AddCard(card: self._copyPlayingCardDeck.GetCards()[index])
 
 			// 將牌從 PlayingCardDeck2 中移除
-			self._playingCardDeck2.RemoveCard(index: index)
+			self._copyPlayingCardDeck.RemoveCard(index: index)
+		}
+
+		// 加入紀錄事件
+		for item in self._playingCardDeck.GetCards() {
+			item.addTarget(self, action: #selector(self.StackCard), for: .touchUpInside)
+		}
+	}
+
+	// 暫存（兩張）牌
+	@IBAction func StackCard(card: Card) -> Void {
+		print(card.GetTitle())
+		if self._flipCounter < 1 {
+			self._flipCounter += 1
+			self._matchCardDeck.AddCard(card: card)
+		} else {
+			self._matchCardDeck.AddCard(card: card)
+			self._flipCounter = 0
+			self.CompareCard(card1: self._matchCardDeck.GetCards()[0], card2: self._matchCardDeck.GetCards()[1])
+			self._matchCardDeck.Reset()
+		}
+	}
+
+	// 比較兩張牌是否一樣
+	private func CompareCard(card1: Card, card2: Card) -> Void {
+		if card1.GetTitle() == card2.GetTitle() {
+			card1.isEnabled = false
+			card2.isEnabled = false
+		} else {
+			// 設定一秒後翻回反面
+			Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+				card1.FlipCard()
+				card2.FlipCard()
+			}
 		}
 	}
 
@@ -79,8 +117,8 @@ class CardMatchingGame: NSObject {
 
 	// 重置遊戲
 	public func ResetGame() -> Void {
-		self._deck.ResetDeck()
-		self._deck2.ResetDeck()
-		self._playingCardDeck.ResetPlayingDeck()
+		self._deck.Reset()
+		self._copyDeck.Reset()
+		self._playingCardDeck.Reset()
 	}
 }

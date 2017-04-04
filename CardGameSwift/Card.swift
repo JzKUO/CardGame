@@ -23,7 +23,7 @@ class Card: UIButton {
 		self.isEnabled = true
 
 		// 配置按下時的要觸發的事件
-		self.addTarget(self, action: #selector(FlipCard), for: .touchUpInside)
+		self.addTarget(self, action: #selector(self.FlipCard), for: .touchUpInside)
 	}
 
 	public func GetTitle() -> String {
@@ -46,19 +46,19 @@ class Card: UIButton {
 
 	// 定義翻牌事件
 	public func FlipCard() -> Void {
-		self._isFront = !self._isFront
-
 		if self.currentTitle == nil {
 			self.setTitle("", for: UIControlState.normal)
 		}
 
-		if (self.currentTitle != "") {
+		if (!self._isFront) {
 			self.setBackgroundImage(UIImage(named: "CardBack"), for: UIControlState.normal)
 			self.setTitle("", for: UIControlState.normal)
 		} else {
 			self.setBackgroundImage(UIImage(named: "CardFront"), for: UIControlState.normal)
 			self.setTitle(self._title, for: UIControlState.normal)
 		}
+
+		self._isFront = !self._isFront
 	}
 
 	// 在畫面上產生卡片

@@ -45,7 +45,9 @@ class ViewController: UIViewController {
 	// 一次將所有牌翻面
 	@IBAction func FlipAllCard(_ sender: UIButton) {
 		for i in 0...15 {
-			self._game.GetPlayingCardDeck().GetCards()[i].FlipCard()
+			if self._game.GetPlayingCardDeck().GetCards()[i].isEnabled {
+				self._game.GetPlayingCardDeck().GetCards()[i].FlipCard()
+			}
 		}
 	}
 

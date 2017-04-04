@@ -46,7 +46,7 @@ class Deck: NSObject {
 		self._cards.remove(at: index)
 	}
 
-	public func ResetDeck() -> Void {
+	public func Reset() -> Void {
 		self._cards.removeAll()
 		self.InitDeck()
 	}
