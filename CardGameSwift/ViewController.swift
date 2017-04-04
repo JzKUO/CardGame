@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 	let _game = CardMatchingGame()
+	@IBOutlet weak var secondTime: UILabel!
+	var _timer: Timer = Timer()
+	var _second = 0
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -27,18 +30,28 @@ class ViewController: UIViewController {
 	//	定義初始化事件
 	func InitAll() -> Void {
 		self._game.InitGame()
-		var counter = 0
+		self.secondTime.text = "0"
+		var index = 0
 
 		for i in 0...3 {
 			for j in 0...3 {
 				// 產生卡牌
-				self._game.GetPlayingCardDeck().GetCards()[counter].GenerateCard(x: j, y: i, view: self)
+				self._game.GetPlayingCardDeck().GetCards()[index].GenerateCard(x: j, y: i, view: self)
 
 				// 將卡牌翻至背面
-				self._game.GetPlayingCardDeck().GetCards()[counter].FlipCard()
+				self._game.GetPlayingCardDeck().GetCards()[index].FlipCard()
 
-				counter += 1
+				index += 1
 			}
+		}
+	}
+
+	// 開始遊戲按鈕
+	@IBAction func StartButton(_ sender: UIButton) {
+		sender.isEnabled = false
+		self._timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+			self._second += 1
+			self.secondTime.text = String(self._second)
 		}
 	}
 
