@@ -53,6 +53,11 @@ class ViewController: UIViewController {
 
 	// 重置遊戲
 	@IBAction func ResetGame(_ sender: UIButton) {
+		// 從畫面中移除
+		for card in self._game.GetPlayingCardDeck().GetCards() {
+			card.removeFromSuperview()
+		}
+		
 		self._game.ResetGame()
 		self.InitAll()
 	}
