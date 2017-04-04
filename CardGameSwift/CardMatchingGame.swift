@@ -13,13 +13,15 @@ class CardMatchingGame: NSObject {
 	private let _deck2 = Deck()
 	private let _playingCardDeck = PlayingCardDeck()
 	private let _playingCardDeck2 = PlayingCardDeck()
-	private var _maxCardNumber: Int = 52
 
 	// 定義遊戲初始事件
 	public func InitGame() -> Void {
 		self._deck.InitDeck()
 		self._deck2.InitDeck()
+		self.DrawCard()
+	}
 
+	private func DrawCard() -> Void {
 		/*
 		* 複製 array 不能直接用 asign（=）的！！！
 		* 一樣要實體化
@@ -31,7 +33,7 @@ class CardMatchingGame: NSObject {
 		* 所以新的 array 改變值時，其實是改到舊的 array
 		*/
 
-		// 從 Deck 中抽出一半的牌，並複製一份到 PlayingCardDeck2
+		// 從 Deck 中抽出一場遊戲一半的牌，並複製一份到 PlayingCardDeck2
 		for _ in 0...7 {
 			// 亂數找卡牌
 			let index = Int(arc4random()) % self._deck.GetCards().count
@@ -45,16 +47,28 @@ class CardMatchingGame: NSObject {
 			self._deck2.RemoveCard(index: index)
 		}
 
-		// 從 PlayingCardDeck2 中亂數加到 PlayingCardDeck 裡面
-		for _ in 0...7 {
-			// 亂數找卡牌
-			let index = Int(arc4random()) % self._playingCardDeck2.GetPlayingCards().count
+		// 從 PlayingCardDeck 移到 PlayingCardDeck2
+		var counter = self._playingCardDeck.GetCards().count - 1
+		for i in (0 ... counter).reversed() {
 
 			// 將牌加入 PlayingCardDeck
-			self._playingCardDeck.AddCard(card: self._playingCardDeck2.GetPlayingCards()[index])
+			self._playingCardDeck2.AddCard(card: self._playingCardDeck.GetCards()[i])
+
+			// 將牌從 Deck 中移除
+			self._playingCardDeck.RemoveCard(index: i)
+		}
+
+		// 從 PlayingCardDeck2 中亂數加到 PlayingCardDeck 裡面
+		counter = self._playingCardDeck2.GetCards().count - 1
+		for _ in (0 ... counter).reversed() {
+			// 亂數找卡牌
+			let index = Int(arc4random()) % self._playingCardDeck2.GetCards().count
+
+			// 將牌加入 PlayingCardDeck
+			self._playingCardDeck.AddCard(card: self._playingCardDeck2.GetCards()[index])
 
 			// 將牌從 PlayingCardDeck2 中移除
-			self._playingCardDeck2.RemovePlayingCard(index: index)
+			self._playingCardDeck2.RemoveCard(index: index)
 		}
 	}
 

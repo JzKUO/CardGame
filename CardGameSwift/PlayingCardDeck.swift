@@ -9,25 +9,25 @@
 import Foundation
 
 class PlayingCardDeck: Deck {
-	private var _playingCardDeck: Array<Card> = []
+	private var _cards: Array<Card> = []
 
 	// 取得所有抽出的卡牌
-	public func GetPlayingCards() -> Array<Card> {
-		return self._playingCardDeck
+	public override func GetCards() -> Array<Card> {
+		return self._cards
 	}
 
 	// 移除卡牌
-	public func RemovePlayingCard(index: Int) {
-		self._playingCardDeck.remove(at: index)
+	public override func RemoveCard(index: Int) {
+		self._cards.remove(at: index)
 	}
 
 	// 加入卡牌
 	public func AddCard(card: Card) -> Void {
-		self._playingCardDeck.append(card)
+		self._cards.append(card)
 	}
 
 	// 重置卡牌（移除所有被抽出的牌）
 	func ResetPlayingDeck() -> Void {
-		self._playingCardDeck.removeAll()
+		self._cards.removeAll()
 	}
 }

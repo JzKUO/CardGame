@@ -32,10 +32,10 @@ class ViewController: UIViewController {
 		for i in 0...3 {
 			for j in 0...3 {
 				// 產生卡牌
-				self._game.GetPlayingCardDeck().GetPlayingCards()[counter].GenerateCard(x: j, y: i, view: self)
+				self._game.GetPlayingCardDeck().GetCards()[counter].GenerateCard(x: j, y: i, view: self)
 
 				// 將卡牌翻至背面
-				self._game.GetPlayingCardDeck().GetPlayingCards()[counter].FlipCard()
+				self._game.GetPlayingCardDeck().GetCards()[counter].FlipCard()
 
 				counter += 1
 			}
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
 	// 一次將所有牌翻面
 	@IBAction func FlipAllCard(_ sender: UIButton) {
 		for i in 0...15 {
-			self._game.GetPlayingCardDeck().GetPlayingCards()[i].FlipCard()
+			self._game.GetPlayingCardDeck().GetCards()[i].FlipCard()
 		}
 	}
 
