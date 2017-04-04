@@ -42,10 +42,12 @@ class Deck: NSObject {
 		return self._cards
 	}
 
+	// 移除一張牌
 	public func RemoveCard(index: Int) -> Void {
 		self._cards.remove(at: index)
 	}
 
+	// 重置牌組
 	public func Reset() -> Void {
 		self._cards.removeAll()
 		self.InitDeck()

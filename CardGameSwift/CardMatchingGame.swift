@@ -124,6 +124,7 @@ class CardMatchingGame: NSObject {
 		self._playingCardDeck.Reset()
 	}
 
+	// 遊戲是否結束
 	public func IsEnd() -> Bool {
 		if self._matchCount == 8 {
 			self._matchCount = 0

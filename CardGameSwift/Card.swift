@@ -26,6 +26,7 @@ class Card: UIButton {
 		self.addTarget(self, action: #selector(self.FlipCard), for: .touchUpInside)
 	}
 
+	// 取得牌的字
 	public func GetTitle() -> String {
 		return self._title
 	}

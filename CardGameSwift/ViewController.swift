@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 	let _game = CardMatchingGame()
 	@IBOutlet weak var secondTime: UILabel!
 	@IBOutlet weak var startButton: UIButton!
+
+	// 計時器
 	var _timer: Timer = Timer()
 	var _second = 0
 
