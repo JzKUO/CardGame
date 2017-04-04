@@ -19,8 +19,8 @@ class Card: UIButton {
 		self._title = title
 		self._textColor = color
 
-		// 啟用按鈕功能
-		self.isEnabled = true
+		// 關閉按鈕功能
+		self.isEnabled = false
 
 		// 配置按下時的要觸發的事件
 		self.addTarget(self, action: #selector(self.FlipCard), for: .touchUpInside)
@@ -30,18 +30,9 @@ class Card: UIButton {
 		return self._title
 	}
 
-	public func GetColor() -> String {
-		return self._textColor
-	}
-
 	//	是否為正面
 	public func IsCardFront() -> Bool {
 		return self._isFront
-	}
-
-	//	是否配對成功
-	public func IsMatched() -> Bool {
-		return self._isMatched
 	}
 
 	// 定義翻牌事件

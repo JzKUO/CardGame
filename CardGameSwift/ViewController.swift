@@ -56,7 +56,15 @@ class ViewController: UIViewController {
 
 	// 開始遊戲按鈕
 	@IBAction func StartButton(_ sender: UIButton) {
+		// 關閉開始按鈕
 		sender.isEnabled = false
+
+		// 使所有牌可點擊
+		for card in self._game.GetPlayingCardDeck().GetCards() {
+			card.isEnabled = true
+		}
+
+		// 計時
 		self._timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 			self._second += 1
 			self.secondTime.text = String(self._second)
