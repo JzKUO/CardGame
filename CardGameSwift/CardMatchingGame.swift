@@ -14,10 +14,11 @@ class CardMatchingGame: NSObject {
 	private let _copyDeck = Deck()
 	private let _playingCardDeck = PlayingCardDeck()
 	private let _copyPlayingCardDeck = PlayingCardDeck()
+	private var _matchCount = 0	// 配對成功的次數
 
-	private var _flipCounter = 0
 	// 用來暫存翻開的兩張牌（用來比對）
 	private let _matchCardDeck = PlayingCardDeck()
+	private var _flipCounter = 0
 
 	// 定義遊戲初始事件
 	public func InitGame() -> Void {
@@ -84,7 +85,7 @@ class CardMatchingGame: NSObject {
 
 	// 暫存（兩張）牌
 	@IBAction func StackCard(card: Card) -> Void {
-		print(card.GetTitle())
+//		print(card.GetTitle())
 		if self._flipCounter < 1 {
 			self._flipCounter += 1
 			self._matchCardDeck.AddCard(card: card)
@@ -101,6 +102,7 @@ class CardMatchingGame: NSObject {
 		if card1.GetTitle() == card2.GetTitle() {
 			card1.isEnabled = false
 			card2.isEnabled = false
+			self._matchCount += 1
 		} else {
 			// 設定一秒後翻回反面
 			Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
@@ -120,5 +122,13 @@ class CardMatchingGame: NSObject {
 		self._deck.Reset()
 		self._copyDeck.Reset()
 		self._playingCardDeck.Reset()
+	}
+
+	public func IsEnd() -> Bool {
+		if self._matchCount == 8 {
+			self._matchCount = 0
+			return true
+		}
+		return false
 	}
 }

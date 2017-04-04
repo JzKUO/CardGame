@@ -52,6 +52,17 @@ class ViewController: UIViewController {
 				index += 1
 			}
 		}
+
+		// 加入判斷遊戲結束的觸發事件
+		for card in self._game.GetPlayingCardDeck().GetCards() {
+			card.addTarget(self, action: #selector(self.EndGame), for: .touchUpInside)
+		}
+	}
+
+	func EndGame() -> Void {
+		if self._game.IsEnd() {
+			self._timer.invalidate()
+		}
 	}
 
 	// 開始遊戲按鈕
