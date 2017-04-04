@@ -26,6 +26,9 @@ class CardMatchingGame: NSObject {
 		* 然後一個一個加進去
 		*
 		* let copyDeck = self._playingCardDeck 這樣是錯的！！！
+		*
+		* 不過要注意，用 append 的方式會像是『指標』一樣
+		* 所以新的 array 改變值時，其實是改到舊的 array
 		*/
 
 		// 從 Deck 中抽出一半的牌，並複製一份到 PlayingCardDeck2

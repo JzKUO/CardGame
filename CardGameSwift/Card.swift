@@ -18,7 +18,9 @@ class Card: UIButton {
 	public func InitCard(title: String, color: String) -> Void {
 		self._title = title
 		self._textColor = color
-		self.isEnabled = false
+
+		// 啟用按鈕功能
+		self.isEnabled = true
 
 		// 配置按下時的要觸發的事件
 		self.addTarget(self, action: #selector(FlipCard), for: .touchUpInside)
@@ -66,9 +68,6 @@ class Card: UIButton {
 
 	// 在畫面上產生卡片
 	public func GenerateCard(x: Int, y: Int, view: UIViewController) -> Void {
-		// 啟用按鈕功能
-		self.isEnabled = true
-
 		// 取得螢幕的尺寸
 		let fullScreenSize = UIScreen.main.bounds.size
 
