@@ -19,7 +19,6 @@ class CardMatchingGame: NSObject {
 
 	// 用來暫存翻開的兩張牌（用來比對）
 	private let _matchCardDeck = PlayingCardDeck()
-	private var _flipCounter = 0
 
 	// 定義遊戲初始事件
 	public func InitGame() -> Void {
@@ -89,13 +88,15 @@ class CardMatchingGame: NSObject {
 	// 暫存（兩張）牌
 	internal func StackCard(card: Card) -> Void {
 //		print(card.GetTitle())
-		if self._flipCounter < 1 {
-			self._flipCounter += 1
+		if self._matchCardDeck.GetCards().count == 0 {
+			// 如果沒有牌，就加入
 			self._matchCardDeck.AddCard(card: card)
 		} else {
+			// 如果有一張牌，加入第二張，並且比對
 			self._matchCardDeck.AddCard(card: card)
-			self._flipCounter = 0
 			self.CompareCard(card1: self._matchCardDeck.GetCards()[0], card2: self._matchCardDeck.GetCards()[1])
+
+			// 重置
 			self._matchCardDeck.Reset()
 		}
 	}
