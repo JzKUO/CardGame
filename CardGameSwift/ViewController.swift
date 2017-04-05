@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 				self._game.GetPlayingCardDeck().GetCards()[index].GenerateCard(x: j, y: i, view: self)
 
 				// 將卡牌翻至背面
-				self._game.GetPlayingCardDeck().GetCards()[index].FlipCard()
+				self._game.GetPlayingCardDeck().GetCards()[index].FlipToBack()
 
 				index += 1
 			}
@@ -86,10 +86,20 @@ class ViewController: UIViewController {
 
 	// 一次將所有牌翻面
 	@IBAction func FlipAllCard(_ sender: UIButton) {
-		for i in 0...15 {
-			if self._game.GetPlayingCardDeck().GetCards()[i].isEnabled {
-				self._game.GetPlayingCardDeck().GetCards()[i].FlipCard()
+		if !self._game.IsPeeked() {
+			for i in 0...15 {
+				if self._game.GetPlayingCardDeck().GetCards()[i].isEnabled {
+					self._game.GetPlayingCardDeck().GetCards()[i].FlipToFront()
+				}
 			}
+			self._game.SetPeeked(value: true)
+		} else {
+			for i in 0...15 {
+				if self._game.GetPlayingCardDeck().GetCards()[i].isEnabled {
+					self._game.GetPlayingCardDeck().GetCards()[i].FlipToBack()
+				}
+			}
+			self._game.SetPeeked(value: false)
 		}
 	}
 

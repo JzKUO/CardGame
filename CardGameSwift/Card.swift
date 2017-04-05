@@ -12,18 +12,22 @@ import UIKit
 class Card: UIButton {
 	private var _title = ""
 	private var _textColor = ""
-	private var _isFront: Bool = false
+	private var _isFront: Bool = true
 	private var _isMatched: Bool = false
 
 	public func InitCard(title: String, color: String) -> Void {
 		self._title = title
 		self._textColor = color
 
+		if self.currentTitle == nil {
+			self.setTitle("", for: UIControlState.normal)
+		}
+
 		// 關閉按鈕功能
 		self.isEnabled = false
 
 		// 配置按下時的要觸發的事件
-		self.addTarget(self, action: #selector(self.FlipCard), for: .touchUpInside)
+		self.addTarget(self, action: #selector(self.FlipToFront), for: .touchUpInside)
 	}
 
 	// 取得牌的字
@@ -36,21 +40,22 @@ class Card: UIButton {
 		return self._isFront
 	}
 
-	// 定義翻牌事件
-	public func FlipCard() -> Void {
-		if self.currentTitle == nil {
-			self.setTitle("", for: UIControlState.normal)
-		}
-
-		if (!self._isFront) {
-			self.setBackgroundImage(UIImage(named: "CardBack"), for: UIControlState.normal)
-			self.setTitle("", for: UIControlState.normal)
-		} else {
+	// 翻到正面
+	public func FlipToFront() -> Void {
+		if !self._isFront {
+			self._isFront = true
 			self.setBackgroundImage(UIImage(named: "CardFront"), for: UIControlState.normal)
 			self.setTitle(self._title, for: UIControlState.normal)
 		}
+	}
 
-		self._isFront = !self._isFront
+	// 翻到背面
+	public func FlipToBack() -> Void {
+		if self._isFront {
+			self._isFront = false
+			self.setBackgroundImage(UIImage(named: "CardBack"), for: UIControlState.normal)
+			self.setTitle("", for: UIControlState.normal)
+		}
 	}
 
 	// 在畫面上產生卡片
