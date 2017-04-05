@@ -17,6 +17,14 @@ class CardMatchingGame: NSObject {
 	private var _matchCount = 0	// 配對成功的次數
 	private var _isPeeked: Bool = false	// 判斷是否為全部被翻正面（偷看）
 
+	// 計分機制
+	private struct ScoreMechanism {
+		let plus = 5
+		let minus = 1
+	}
+	private var _scoreMechanism = ScoreMechanism()
+	private var _score = 0
+
 	// 用來暫存翻開的兩張牌（用來比對）
 	private let _matchCardDeck = PlayingCardDeck()
 
@@ -90,6 +98,10 @@ class CardMatchingGame: NSObject {
 		if self._matchCardDeck.GetCards().count == 0 {
 			// 如果沒有牌，就加入
 			self._matchCardDeck.AddCard(card: card)
+
+			// 扣分
+			self._score -= self._scoreMechanism.minus
+
 		} else {
 			// 判斷是否重複案同一張卡片
 			if self._matchCardDeck.GetCards()[0] != card {
@@ -106,15 +118,25 @@ class CardMatchingGame: NSObject {
 	// 比較兩張牌是否一樣
 	private func CompareCard(card1: Card, card2: Card) -> Void {
 		if card1.GetTitle() == card2.GetTitle() {
+			// 停止按鈕功能
 			card1.isEnabled = false
 			card2.isEnabled = false
+
+			// 比對成功次數加一
 			self._matchCount += 1
+
+			// 加分
+			self._score += self._scoreMechanism.plus
+
 		} else {
 			// 設定一秒後翻回反面
 			Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
 				card1.FlipToBack()
 				card2.FlipToBack()
 			}
+
+			// 扣分
+			self._score -= self._scoreMechanism.minus
 		}
 	}
 
@@ -131,6 +153,11 @@ class CardMatchingGame: NSObject {
 	// 設定為：偷看中/沒被偷看
 	public func SetPeeked(value: Bool) -> Void {
 		self._isPeeked = value
+	}
+
+	// 取得分數
+	public func GetScore() -> Int {
+		return self._score
 	}
 
 	// 重置遊戲
