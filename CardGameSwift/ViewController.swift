@@ -10,10 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 	let _game = CardMatchingGame()
-	@IBOutlet weak var secondTime: UILabel!
 	@IBOutlet weak var startButton: UIButton!
 
+	// 計分器
+	@IBOutlet weak var _scoreLabel: UILabel!
+
 	// 計時器
+	@IBOutlet weak var secondTime: UILabel!
 	var _timer: Timer = Timer()
 	var _second = 0
 
@@ -40,6 +43,8 @@ class ViewController: UIViewController {
 		self._second = 0
 		self.secondTime.text = "0"
 		self._timer.invalidate()
+		// 初始計分器
+		self._scoreLabel.text = "0"
 
 		// 將牌部署到畫面上
 		var index = 0
@@ -55,9 +60,12 @@ class ViewController: UIViewController {
 			}
 		}
 
-		// 加入判斷遊戲結束的觸發事件
 		for card in self._game.GetPlayingCardDeck().GetCards() {
+			// 加入判斷遊戲結束的觸發事件
 			card.addTarget(self, action: #selector(self.EndGame), for: .touchUpInside)
+
+			// 加入更新分數觸發事件
+			card.addTarget(self, action: #selector(self.UptadeScore), for: .touchUpInside)
 		}
 	}
 
@@ -65,6 +73,10 @@ class ViewController: UIViewController {
 		if self._game.IsEnd() {
 			self._timer.invalidate()
 		}
+	}
+
+	func UptadeScore() -> Void {
+		self._scoreLabel.text = String(self._game.GetScore())
 	}
 
 	// 開始遊戲按鈕
