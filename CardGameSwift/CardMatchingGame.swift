@@ -130,7 +130,7 @@ class CardMatchingGame: NSObject {
 
 		} else {
 			// 設定一秒後翻回反面
-			Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+			Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
 				card1.FlipToBack()
 				card2.FlipToBack()
 			}
