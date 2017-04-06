@@ -127,7 +127,7 @@ class ViewController: UIViewController {
 		for card in self._game.GetPlayingCardDeck().GetCards() {
 			card.removeFromSuperview()
 		}
-		
+
 		self._game.ResetGame()
 		self.InitAll()
 	}
