@@ -10,12 +10,21 @@ import Foundation
 import UIKit
 
 class CardMatchingGame: NSObject {
-	private let _deck = Deck()
+	private let _deck     = Deck()
 	private let _copyDeck = Deck()
-	private let _playingCardDeck = PlayingCardDeck()
+	private let _playingCardDeck     = PlayingCardDeck()
 	private let _copyPlayingCardDeck = PlayingCardDeck()
+	private var _matchCount = 0	// 配對成功的次數
+	private var _isPeeked: Bool = false	// 判斷是否為全部被翻正面（偷看）
 
-	private var _flipCounter = 0
+	// 計分機制
+	private struct ScoreMechanism {
+		let plus  = 5
+		let minus = 1
+	}
+	private var _scoreMechanism = ScoreMechanism()
+	private var _score = 0
+
 	// 用來暫存翻開的兩張牌（用來比對）
 	private let _matchCardDeck = PlayingCardDeck()
 
@@ -28,7 +37,7 @@ class CardMatchingGame: NSObject {
 
 	private func DrawCard() -> Void {
 		/*
-		* 複製 array 不能直接用 asign（=）的！！！
+		* MARK: 複製 array 不能直接用 asign（=）的！！！
 		* 一樣要實體化
 		* 然後一個一個加進去
 		*
@@ -78,35 +87,59 @@ class CardMatchingGame: NSObject {
 
 		// 加入紀錄事件
 		for item in self._playingCardDeck.GetCards() {
-			item.addTarget(self, action: #selector(self.StackCard), for: .touchUpInside)
+			item.addTarget(self,
+			               action: #selector(self.StackCard),
+			               for: .touchUpInside)
 		}
 	}
 
+	// FIXME: 重複按自己會被視為配對成功（BUG）
+
 	// 暫存（兩張）牌
-	@IBAction func StackCard(card: Card) -> Void {
-		print(card.GetTitle())
-		if self._flipCounter < 1 {
-			self._flipCounter += 1
+	internal func StackCard(card: Card) -> Void {
+		if self._matchCardDeck.GetCards().count == 0 {
+			// 如果沒有牌，就加入
 			self._matchCardDeck.AddCard(card: card)
+
+			// 扣分
+			self._score -= self._scoreMechanism.minus
+
 		} else {
-			self._matchCardDeck.AddCard(card: card)
-			self._flipCounter = 0
-			self.CompareCard(card1: self._matchCardDeck.GetCards()[0], card2: self._matchCardDeck.GetCards()[1])
-			self._matchCardDeck.Reset()
+			// 判斷是否重複案同一張卡片
+			if self._matchCardDeck.GetCards()[0] != card {
+				// 如果有一張牌，加入第二張，並且比對
+				self._matchCardDeck.AddCard(card: card)
+				self.CompareCard(card1: self._matchCardDeck.GetCards()[0],
+				                 card2: self._matchCardDeck.GetCards()[1])
+
+				// 重置
+				self._matchCardDeck.Reset()
+			}
 		}
 	}
 
 	// 比較兩張牌是否一樣
 	private func CompareCard(card1: Card, card2: Card) -> Void {
 		if card1.GetTitle() == card2.GetTitle() {
+			// 停止按鈕功能
 			card1.isEnabled = false
 			card2.isEnabled = false
+
+			// 比對成功次數加一
+			self._matchCount += 1
+
+			// 加分
+			self._score += self._scoreMechanism.plus
+
 		} else {
 			// 設定一秒後翻回反面
-			Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
-				card1.FlipCard()
-				card2.FlipCard()
+			Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+				card1.FlipToBack()
+				card2.FlipToBack()
 			}
+
+			// 扣分
+			self._score -= self._scoreMechanism.minus
 		}
 	}
 
@@ -115,10 +148,34 @@ class CardMatchingGame: NSObject {
 		return self._playingCardDeck
 	}
 
+	// 是否偷看牌
+	public func IsPeeked() -> Bool {
+		return self._isPeeked
+	}
+
+	// 設定為：偷看中/沒被偷看
+	public func SetPeeked(value: Bool) -> Void {
+		self._isPeeked = value
+	}
+
+	// 取得分數
+	public func GetScore() -> Int {
+		return self._score
+	}
+
 	// 重置遊戲
 	public func ResetGame() -> Void {
 		self._deck.Reset()
 		self._copyDeck.Reset()
 		self._playingCardDeck.Reset()
+	}
+
+	// 遊戲是否結束
+	public func IsEnd() -> Bool {
+		if self._matchCount == 8 {
+			self._matchCount = 0
+			return true
+		}
+		return false
 	}
 }
