@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 		// 啟用開始按鈕
 		self.startButton.isEnabled = true
 		// 初始計數器
-		self._second = 0
+		self._second         = 0
 		self.secondTime.text = "0"
 		self._timer.invalidate()
 		// 初始計分器
@@ -51,10 +51,12 @@ class ViewController: UIViewController {
 		for i in 0...3 {
 			for j in 0...3 {
 				// 產生卡牌
-				self._game.GetPlayingCardDeck().GetCards()[index].GenerateCard(x: j, y: i, view: self)
+				self._game.GetPlayingCardDeck().GetCards()[index]
+					.GenerateCard(x: j, y: i, view: self)
 
 				// 將卡牌翻至背面
-				self._game.GetPlayingCardDeck().GetCards()[index].FlipToBack()
+				self._game.GetPlayingCardDeck().GetCards()[index]
+					.FlipToBack()
 
 				index += 1
 			}
@@ -62,10 +64,14 @@ class ViewController: UIViewController {
 
 		for card in self._game.GetPlayingCardDeck().GetCards() {
 			// 加入判斷遊戲結束的觸發事件
-			card.addTarget(self, action: #selector(self.EndGame), for: .touchUpInside)
+			card.addTarget(self,
+			               action: #selector(self.EndGame),
+			               for: .touchUpInside)
 
 			// 加入更新分數觸發事件
-			card.addTarget(self, action: #selector(self.UptadeScore), for: .touchUpInside)
+			card.addTarget(self,
+			               action: #selector(self.UptadeScore),
+			               for: .touchUpInside)
 		}
 	}
 

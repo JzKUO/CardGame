@@ -27,7 +27,9 @@ class Card: UIButton {
 		self.isEnabled = false
 
 		// 配置按下時的要觸發的事件
-		self.addTarget(self, action: #selector(self.FlipToFront), for: .touchUpInside)
+		self.addTarget(self,
+		               action: #selector(self.FlipToFront),
+		               for: .touchUpInside)
 	}
 
 	// 取得牌的字
@@ -44,7 +46,8 @@ class Card: UIButton {
 	public func FlipToFront() -> Void {
 		if !self._isFront {
 			self._isFront = true
-			self.setBackgroundImage(UIImage(named: "CardFront"), for: UIControlState.normal)
+			self.setBackgroundImage(UIImage(named: "CardFront"),
+			                        for: UIControlState.normal)
 			self.setTitle(self._title, for: UIControlState.normal)
 		}
 	}
@@ -53,7 +56,8 @@ class Card: UIButton {
 	public func FlipToBack() -> Void {
 		if self._isFront {
 			self._isFront = false
-			self.setBackgroundImage(UIImage(named: "CardBack"), for: UIControlState.normal)
+			self.setBackgroundImage(UIImage(named: "CardBack"),
+			                        for: UIControlState.normal)
 			self.setTitle("", for: UIControlState.normal)
 		}
 	}
@@ -76,7 +80,10 @@ class Card: UIButton {
 		let cardPositionY: Double = Double(y) * cardHeight + Double(y) * gutterY + 20
 
 		// 指定 UIButton 外框
-		self.frame = CGRect(x: cardPositionX, y: cardPositionY, width: cardWdith, height: cardHeight)
+		self.frame = CGRect(x: cardPositionX,
+		                    y: cardPositionY,
+		                    width: cardWdith,
+		                    height: cardHeight)
 
 		// 卡牌文字
 		self.setTitle(self._title, for: UIControlState.normal)
@@ -93,7 +100,8 @@ class Card: UIButton {
 		self.isUserInteractionEnabled = true
 
 		// 卡牌背景
-		self.setBackgroundImage(UIImage(named: "CardFront"), for: UIControlState.normal)
+		self.setBackgroundImage(UIImage(named: "CardFront"),
+		                        for: UIControlState.normal)
 
 		// 將卡牌加入畫面
 		view.view.addSubview(self)

@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 
 class CardMatchingGame: NSObject {
-	private let _deck = Deck()
+	private let _deck     = Deck()
 	private let _copyDeck = Deck()
-	private let _playingCardDeck = PlayingCardDeck()
+	private let _playingCardDeck     = PlayingCardDeck()
 	private let _copyPlayingCardDeck = PlayingCardDeck()
 	private var _matchCount = 0	// 配對成功的次數
 	private var _isPeeked: Bool = false	// 判斷是否為全部被翻正面（偷看）
 
 	// 計分機制
 	private struct ScoreMechanism {
-		let plus = 5
+		let plus  = 5
 		let minus = 1
 	}
 	private var _scoreMechanism = ScoreMechanism()
@@ -87,7 +87,9 @@ class CardMatchingGame: NSObject {
 
 		// 加入紀錄事件
 		for item in self._playingCardDeck.GetCards() {
-			item.addTarget(self, action: #selector(self.StackCard), for: .touchUpInside)
+			item.addTarget(self,
+			               action: #selector(self.StackCard),
+			               for: .touchUpInside)
 		}
 	}
 
@@ -107,7 +109,8 @@ class CardMatchingGame: NSObject {
 			if self._matchCardDeck.GetCards()[0] != card {
 				// 如果有一張牌，加入第二張，並且比對
 				self._matchCardDeck.AddCard(card: card)
-				self.CompareCard(card1: self._matchCardDeck.GetCards()[0], card2: self._matchCardDeck.GetCards()[1])
+				self.CompareCard(card1: self._matchCardDeck.GetCards()[0],
+				                 card2: self._matchCardDeck.GetCards()[1])
 
 				// 重置
 				self._matchCardDeck.Reset()
