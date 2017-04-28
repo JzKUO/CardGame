@@ -27,9 +27,13 @@ class Card: UIButton {
 		self.isEnabled = false
 
 		// 配置按下時的要觸發的事件
-		self.addTarget(self,
-		               action: #selector(self.FlipToFront),
-		               for: .touchUpInside)
+//		self.addTarget(self,
+//		               action: #selector(self.FlipToFront),
+//		               for: .touchUpInside)
+
+		let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.FlipToFront))
+		swipe.direction = UISwipeGestureRecognizerDirection.down
+		self.addGestureRecognizer(swipe)
 	}
 
 	// 取得牌的字
