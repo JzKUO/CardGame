@@ -93,8 +93,6 @@ class CardMatchingGame: NSObject {
 		}
 	}
 
-	// FIXME: 重複按自己會被視為配對成功（BUG）
-
 	// 暫存（兩張）牌
 	internal func StackCard(card: Card) -> Void {
 		if self._matchCardDeck.GetCards().count == 0 {
